@@ -1,0 +1,1165 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>科技企业 - 产品服务</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome -->
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <!-- AOS Animation -->
+    <link href="https://cdn.jsdelivr.net.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#0056b3',
+                        secondary: '#003366',
+                        accent: '#00a0e9',
+                        light: '#f5f7fa',
+                        dark: '#333333'
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif']
+                    },
+                    boxShadow: {
+                        'custom': '0 4px 20px rgba(0, 0, 0, 0.08)'
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .text-shadow {
+                text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            }
+            .transition-all-300 {
+                transition: all 0.3s ease;
+            }
+            .bg-gradient-blue {
+                background: linear-gradient(135deg, #0056b3 0%, #003366 100%);
+            }
+            .card-hover:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            }
+        }
+        
+        /* 自定义样式 */
+        .navbar-fixed {
+            backdrop-filter: blur(10px);
+            background-color: rgba(255, 255, 255, 0.9);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* 面包屑导航 */
+        .breadcrumb-item:not(:last-child)::after {
+            content: '/';
+            margin: 0 0.5rem;
+            color: #999;
+        }
+        
+        /* 产品卡片 */
+        .product-card {
+            overflow: hidden;
+        }
+        
+        .product-card img {
+            transition: transform 0.5s ease;
+        }
+        
+        .product-card:hover img {
+            transform: scale(1.05);
+        }
+        
+        /* 产品详情模态框 */
+        .modal {
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            z-index: 100;
+        }
+        
+        .modal.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .modal-content {
+            transform: translateY(20px);
+            transition: transform 0.3s ease;
+        }
+        
+        .modal.active .modal-content {
+            transform: translateY(0);
+        }
+        
+        /* 移动端菜单 */
+        .mobile-menu {
+            transform: translateX(-100%);
+            transition: transform 0.3s ease-in-out;
+        }
+        
+        .mobile-menu.active {
+            transform: translateX(0);
+        }
+        
+        /* 回到顶部按钮 */
+        .back-to-top {
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .back-to-top.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        /* 产品标签 */
+        .product-tag {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            z-index: 1;
+        }
+        
+        /* 产品图片预览 */
+        .product-gallery {
+            position: relative;
+        }
+        
+        .gallery-thumbs {
+            display: flex;
+            margin-top: 1rem;
+        }
+        
+        .gallery-thumb {
+            width: 80px;
+            height: 80px;
+            margin-right: 0.5rem;
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+        }
+        
+        .gallery-thumb.active {
+            border-color: #0056b3;
+        }
+        
+        /* 产品特点 */
+        .feature-item {
+            transition: all 0.3s ease;
+        }
+        
+        .feature-item:hover {
+            transform: translateX(5px);
+        }
+        
+        /* 产品参数表格 */
+        .param-table th,
+        .param-table td {
+            padding: 0.75rem;
+            border-bottom: 1px solid #e5e7eb;
+        }
+        
+        .param-table th {
+            font-weight: 600;
+            background-color: #f9fafb;
+        }
+    </style>
+</head>
+<body class="font-sans text-dark bg-white">
+    <!-- 导航栏 -->
+    <header id="navbar" class="fixed top-0 left-0 w-full z-50 transition-all duration-300">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <a href="index.html" class="flex items-center">
+                <span class="text-2xl font-bold text-primary">科技企业</span>
+            </a>
+            
+            <!-- 桌面端导航 -->
+            <nav class="hidden md:flex items-center space-x-8">
+                <a href="index.html" class="text-dark hover:text-primary transition-all-300">首页</a>
+                <a href="about.html" class="text-dark hover:text-primary transition-all-300">关于我们</a>
+                <div class="relative group">
+                    <a href="products.html" class="text-primary font-medium flex items-center">
+                        产品服务
+                        <i class="fa fa-angle-down ml-1 text-xs"></i>
+                    </a>
+                    <div class="absolute left-0 mt-2 w-48 bg-white rounded-md shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50">
+                        <a href="products.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">智能解决方案</a>
+                        <a href="products.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">工业自动化设备</a>
+                        <a href="products.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">智能控制系统</a>
+                    </div>
+                </div>
+                <a href="news.html" class="text-dark hover:text-primary transition-all-300">新闻动态</a>
+                <a href="contact.html" class="text-dark hover:text-primary transition-all-300">联系我们</a>
+            </nav>
+            
+            <!-- 移动端菜单按钮 -->
+            <button id="menu-toggle" class="md:hidden text-dark focus:outline-none">
+                <i class="fa fa-bars text-xl"></i>
+            </button>
+        </div>
+        
+        <!-- 移动端菜单 -->
+        <div id="mobile-menu" class="mobile-menu fixed top-0 left-0 h-full w-4/5 max-w-xs bg-white shadow-lg z-50 md:hidden">
+            <div class="p-4 border-b flex justify-between items-center">
+                <span class="text-xl font-bold text-primary">科技企业</span>
+                <button id="close-menu" class="text-dark focus:outline-none">
+                    <i class="fa fa-times text-xl"></i>
+                </button>
+            </div>
+            <nav class="p-4">
+                <ul class="space-y-4">
+                    <li><a href="index.html" class="block text-dark hover:text-primary transition-all-300">首页</a></li>
+                    <li><a href="about.html" class="block text-dark hover:text-primary transition-all-300">关于我们</a></li>
+                    <li>
+                        <div class="mobile-dropdown">
+                            <button class="flex justify-between items-center w-full text-primary font-medium">
+                                产品服务
+                                <i class="fa fa-angle-down"></i>
+                            </button>
+                            <div class="mobile-dropdown-content pl-4 mt-2 space-y-2">
+                                <a href="products.html" class="block text-dark hover:text-primary transition-all-300">智能解决方案</a>
+                                <a href="products.html" class="block text-dark hover:text-primary transition-all-300">工业自动化设备</a>
+                                <a href="products.html" class="block text-dark hover:text-primary transition-all-300">智能控制系统</a>
+                            </div>
+                        </div>
+                    </li>
+                    <li><a href="news.html" class="block text-dark hover:text-primary transition-all-300">新闻动态</a></li>
+                    <li><a href="contact.html" class="block text-dark hover:text-primary transition-all-300">联系我们</a></li>
+                </ul>
+            </nav>
+        </div>
+        
+        <!-- 菜单遮罩 -->
+        <div id="menu-overlay" class="fixed inset-0 bg-black opacity-50 z-40 hidden md:hidden"></div>
+    </header>
+
+    <!-- 页面标题 -->
+    <section class="bg-gradient-blue py-24 relative">
+        <div class="container mx-auto px-4 text-center text-white relative z-10">
+            <h1 class="text-4xl md:text-5xl font-bold mb-4 text-shadow" data-aos="fade-up">产品与服务</h1>
+            <p class="text-lg opacity-90 max-w-2xl mx-auto" data-aos="fade-up" data-aos-delay="100">我们提供全方位的产品和服务解决方案，满足不同客户的需求</p>
+            
+            <!-- 面包屑导航 -->
+            <div class="flex justify-center mt-8 text-sm opacity-80" data-aos="fade-up" data-aos-delay="200">
+                <div class="breadcrumb-item">
+                    <a href="index.html" class="hover:text-white transition-all-300">首页</a>
+                </div>
+                <div class="breadcrumb-item">
+                    <span>产品服务</span>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 背景装饰 -->
+        <div class="absolute top-0 left-0 w-full h-full opacity-10">
+            <div class="absolute top-10 left-10 w-20 h-20 rounded-full bg-white"></div>
+            <div class="absolute bottom-10 right-10 w-40 h-40 rounded-full bg-white"></div>
+            <div class="absolute top-1/2 left-1/4 w-16 h-16 rounded-full bg-white"></div>
+        </div>
+    </section>
+
+    <!-- 产品分类筛选 -->
+    <section class="py-12 bg-light">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-wrap justify-center gap-4" data-aos="fade-up">
+                <button class="product-filter-btn active px-6 py-2 rounded-full bg-primary text-white hover:bg-secondary transition-all-300" data-filter="all">全部</button>
+                <button class="product-filter-btn px-6 py-2 rounded-full bg-gray-200 text-gray-700 hover:bg-gray-300 transition-all-300" data-filter="product">产品</button>
+                <button class="product-filter-btn px-6 py-2 rounded-full bg-gray-200 text-gray-700 hover:bg-gray-300 transition-all-300" data-filter="service">服务</button>
+                <button class="product-filter-btn px-6 py-2 rounded-full bg-gray-200 text-gray-700 hover:bg-gray-300 transition-all-300" data-filter="solution">解决方案</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- 产品列表 -->
+    <section class="py-16">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- 产品1 -->
+                <div class="product-card bg-white rounded-lg overflow-hidden shadow-custom card-hover transition-all-300" data-category="product solution" data-aos="fade-up" data-aos-delay="100">
+                    <div class="relative overflow-hidden h-64">
+                        <img src="https://p26-doubao-search-sign.byteimg.com/tos-cn-i-tjoges91tu/3b4fe1893ae67047516e8e4d06d0e575~tplv-be4g95zd3a-image.jpeg?rk3s=542c0f93&x-expires=1765176968&x-signature=YPlo%2FHCUeVP5UNbeNlGA6gf91E0%3D" alt="智能解决方案" class="w-full h-full object-cover">
+                        <div class="product-tag">
+                            <span class="bg-primary text-white text-xs font-bold px-3 py-1 rounded-full">热门</span>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold mb-3 text-secondary">智能解决方案</h3>
+                        <p class="text-gray-600 mb-4">为企业提供智能化的整体解决方案，包括硬件设备和软件系统，助力企业数字化转型</p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-sm text-gray-500">适用行业：制造业、零售业、医疗</span>
+                            <button class="view-details text-primary font-medium hover:text-secondary transition-all-300" data-id="1">
+                                查看详情 <i class="fa fa-arrow-right ml-1"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 产品2 -->
+                <div class="product-card bg-white rounded-lg overflow-hidden shadow-custom card-hover transition-all-300" data-category="product" data-aos="fade-up" data-aos-delay="200">
+                    <div class="relative overflow-hidden h-64">
+                        <img src="https://p11-doubao-search-sign.byteimg.com/labis/75fdf4263f903549f33e38a7f57cb6ab~tplv-be4g95zd3a-image.jpeg?rk3s=542c0f93&x-expires=1765176968&x-signature=4m%2BoLr1Y0bVDs2TM2mvJpw6ZIfQ%3D" alt="工业自动化设备" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold mb-3 text-secondary">工业自动化设备</h3>
+                        <p class="text-gray-600 mb-4">提供高精度、高效率的工业自动化设备，适用于各种工业生产场景，提高生产效率</p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-sm text-gray-500">适用行业：制造业、重工业</span>
+                            <button class="view-details text-primary font-medium hover:text-secondary transition-all-300" data-id="2">
+                                查看详情 <i class="fa fa-arrow-right ml-1"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 服务1 -->
+                <div class="product-card bg-white rounded-lg overflow-hidden shadow-custom card-hover transition-all-300" data-category="service" data-aos="fade-up" data-aos-delay="300">
+                    <div class="relative overflow-hidden h-64">
+                        <img src="https://p3-doubao-search-sign.byteimg.com/labis/799544f1e44be277bd617343bad63b18~tplv-be4g95zd3a-image.jpeg?rk3s=542c0f93&x-expires=1765176968&x-signature=CLORhHvcReHdWeC7bcwkCeSxO7g%3D" alt="数字化转型咨询" class="w-full h-full object-cover">
+                        <div class="product-tag">
+                            <span class="bg-accent text-white text-xs font-bold px-3 py-1 rounded-full">新品</span>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold mb-3 text-secondary">数字化转型咨询</h3>
+                        <p class="text-gray-600 mb-4">专业的数字化转型咨询服务，帮助企业制定数字化战略，实现业务创新和增长</p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-sm text-gray-500">适用行业：全行业</span>
+                            <button class="view-details text-primary font-medium hover:text-secondary transition-all-300" data-id="3">
+                                查看详情 <i class="fa fa-arrow-right ml-1"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 服务2 -->
+                <div class="product-card bg-white rounded-lg overflow-hidden shadow-custom card-hover transition-all-300" data-category="service" data-aos="fade-up" data-aos-delay="100">
+                    <div class="relative overflow-hidden h-64">
+                        <img src="https://p3-doubao-search-sign.byteimg.com/labis/194a159df557901fe1ec0f2570ee7d3b~tplv-be4g95zd3a-image.jpeg?rk3s=542c0f93&x-expires=1765176968&x-signature=vo54H2NVwNei3SfaCEAz0L4YG%2BQ%3D" alt="技术支持与培训" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold mb-3 text-secondary">技术支持与培训</h3>
+                        <p class="text-gray-600 mb-4">提供全面的技术支持和培训服务，确保客户能够充分利用我们的产品和解决方案</p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-sm text-gray-500">适用行业：全行业</span>
+                            <button class="view-details text-primary font-medium hover:text-secondary transition-all-300" data-id="4">
+                                查看详情 <i class="fa fa-arrow-right ml-1"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 产品3 -->
+                <div class="product-card bg-white rounded-lg overflow-hidden shadow-custom card-hover transition-all-300" data-category="product solution" data-aos="fade-up" data-aos-delay="200">
+                    <div class="relative overflow-hidden h-64">
+                        <img src="https://p11-doubao-search-sign.byteimg.com/labis/4fa7ad17b95ee7b0b7935f6185df37e8~tplv-be4g95zd3a-image.jpeg?rk3s=542c0f93&x-expires=1765176968&x-signature=oBshADvQJmL56aiAL3Qm9pT45rY%3D" alt="智能控制系统" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold mb-3 text-secondary">智能控制系统</h3>
+                        <p class="text-gray-600 mb-4">先进的智能控制系统，适用于各种工业和商业场景，提高运营效率和管理水平</p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-sm text-gray-500">适用行业：制造业、能源、交通</span>
+                            <button class="view-details text-primary font-medium hover:text-secondary transition-all-300" data-id="5">
+                                查看详情 <i class="fa fa-arrow-right ml-1"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 服务3 -->
+                <div class="product-card bg-white rounded-lg overflow-hidden shadow-custom card-hover transition-all-300" data-category="service solution" data-aos="fade-up" data-aos-delay="300">
+                    <div class="relative overflow-hidden h-64">
+                        <img src="https://p26-doubao-search-sign.byteimg.com/labis/image/ab315c03f6693492e2e72d799c546360~tplv-be4g95zd3a-image.jpeg?rk3s=542c0f93&x-expires=1765176963&x-signature=r4KSsDHZg8rid%2FKtYcoqg1qEe2c%3D" alt="系统集成服务" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold mb-3 text-secondary">系统集成服务</h3>
+                        <p class="text-gray-600 mb-4">专业的系统集成服务，将各种独立的系统整合为一个统一的整体，提高系统效率和可靠性</p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-sm text-gray-500">适用行业：全行业</span>
+                            <button class="view-details text-primary font-medium hover:text-secondary transition-all-300" data-id="6">
+                                查看详情 <i class="fa fa-arrow-right ml-1"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 分页 -->
+            <div class="flex justify-center mt-12" data-aos="fade-up">
+                <nav class="inline-flex rounded-md shadow">
+                    <a href="#" class="py-2 px-4 bg-white border border-gray-300 rounded-l-md text-gray-700 hover:bg-gray-50">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                    <a href="#" class="py-2 px-4 bg-primary border border-primary text-white">1</a>
+                    <a href="#" class="py-2 px-4 bg-white border border-gray-300 text-gray-700 hover:bg-gray-50">2</a>
+                    <a href="#" class="py-2 px-4 bg-white border border-gray-300 text-gray-700 hover:bg-gray-50">3</a>
+                    <a href="#" class="py-2 px-4 bg-white border border-gray-300 rounded-r-md text-gray-700 hover:bg-gray-50">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                </nav>
+            </div>
+        </div>
+    </section>
+
+    <!-- 客户案例展示区 -->
+    <section class="py-20 bg-light">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16" data-aos="fade-up">
+                <h2 class="text-3xl font-bold mb-4 text-secondary">客户案例</h2>
+                <p class="text-gray-600 max-w-2xl mx-auto">我们已成功为众多企业提供了优质的产品和服务，以下是部分客户案例</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- 案例1 -->
+                <div class="bg-white rounded-lg overflow-hidden shadow-custom card-hover transition-all-300" data-aos="fade-up" data-aos-delay="100">
+                    <div class="h-48 overflow-hidden">
+                        <img src="https://p11-doubao-search-sign.byteimg.com/tos-cn-i-xv4ileqgde/fb2c55171a134560971f0284be64ea56~tplv-be4g95zd3a-image.jpeg?rk3s=542c0f93&x-expires=1765176963&x-signature=7HrVuzb2D7aMSyuHNcFe5gIhqus%3D" alt="制造业解决方案" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-6">
+                        <div class="flex justify-between items-center mb-3">
+                            <h3 class="text-xl font-bold text-secondary">制造业解决方案</h3>
+                            <span class="bg-primary bg-opacity-10 text-primary text-xs font-bold px-3 py-1 rounded-full">制造业</span>
+                        </div>
+                        <p class="text-gray-600 mb-4">为某大型制造企业提供了全面的自动化解决方案，提高了生产效率30%</p>
+                        <a href="#" class="inline-block text-primary font-medium hover:text-secondary transition-all-300">
+                            查看详情 <i class="fa fa-arrow-right ml-1"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- 案例2 -->
+                <div class="bg-white rounded-lg overflow-hidden shadow-custom card-hover transition-all-300" data-aos="fade-up" data-aos-delay="200">
+                    <div class="h-48 overflow-hidden">
+                        <img src="https://p3-doubao-search-sign.byteimg.com/labis/799544f1e44be277bd617343bad63b18~tplv-be4g95zd3a-image.jpeg?rk3s=542c0f93&x-expires=1765176968&x-signature=CLORhHvcReHdWeC7bcwkCeSxO7g%3D" alt="零售业数字化转型" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-6">
+                        <div class="flex justify-between items-center mb-3">
+                            <h3 class="text-xl font-bold text-secondary">零售业数字化转型</h3>
+                            <span class="bg-primary bg-opacity-10 text-primary text-xs font-bold px-3 py-1 rounded-full">零售业</span>
+                        </div>
+                        <p class="text-gray-600 mb-4">帮助零售企业实现数字化转型，提升了客户体验和销售业绩</p>
+                        <a href="#" class="inline-block text-primary font-medium hover:text-secondary transition-all-300">
+                            查看详情 <i class="fa fa-arrow-right ml-1"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- 案例3 -->
+                <div class="bg-white rounded-lg overflow-hidden shadow-custom card-hover transition-all-300" data-aos="fade-up" data-aos-delay="300">
+                    <div class="h-48 overflow-hidden">
+                        <img src="https://p3-doubao-search-sign.byteimg.com/labis/194a159df557901fe1ec0f2570ee7d3b~tplv-be4g95zd3a-image.jpeg?rk3s=542c0f93&x-expires=1765176968&x-signature=vo54H2NVwNei3SfaCEAz0L4YG%2BQ%3D" alt="医疗行业系统集成" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-6">
+                        <div class="flex justify-between items-center mb-3">
+                            <h3 class="text-xl font-bold text-secondary">医疗行业系统集成</h3>
+                            <span class="bg-primary bg-opacity-10 text-primary text-xs font-bold px-3 py-1 rounded-full">医疗行业</span>
+                        </div>
+                        <p class="text-gray-600 mb-4">为医疗机构提供系统集成服务，优化了医疗流程，提高了服务质量</p>
+                        <a href="#" class="inline-block text-primary font-medium hover:text-secondary transition-all-300">
+                            查看详情 <i class="fa fa-arrow-right ml-1"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center mt-12">
+                <a href="#" class="inline-block border-2 border-primary text-primary px-8 py-3 rounded-md font-medium hover:bg-primary hover:text-white transition-all-300">查看更多案例</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- 联系我们 -->
+    <section class="py-20">
+        <div class="container mx-auto px-4">
+            <div class="bg-gradient-blue rounded-xl overflow-hidden shadow-lg">
+                <div class="flex flex-col md:flex-row">
+                    <div class="md:w-1/2 p-8 md:p-12 text-white" data-aos="fade-right">
+                        <h2 class="text-3xl font-bold mb-6">对我们的产品感兴趣？</h2>
+                        <p class="mb-8 opacity-90">
+                            如果您对我们的产品或服务感兴趣，或者有任何疑问，请随时联系我们。我们的专业团队将为您提供最适合的解决方案。
+                        </p>
+                        <ul class="space-y-4 mb-8">
+                            <li class="flex items-start">
+                                <i class="fa fa-check-circle mt-1 mr-3 text-accent"></i>
+                                <span>专业的技术团队，为您提供全方位的技术支持</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fa fa-check-circle mt-1 mr-3 text-accent"></i>
+                                <span>定制化的解决方案，满足您的特定需求</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fa fa-check-circle mt-1 mr-3 text-accent"></i>
+                                <span>完善的售后服务，确保您的业务顺利运行</span>
+                            </li>
+                        </ul>
+                        <a href="contact.html" class="inline-block bg-white text-primary px-8 py-3 rounded-md font-medium hover:bg-opacity-90 transition-all-300">联系我们</a>
+                    </div>
+                    <div class="md:w-1/2 bg-white p-8 md:p-12" data-aos="fade-left">
+                        <form>
+                            <div class="mb-6">
+                                <label for="name" class="block text-gray-700 font-medium mb-2">姓名</label>
+                                <input type="text" id="name" class="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent" placeholder="请输入您的姓名" required>
+                            </div>
+                            <div class="mb-6">
+                                <label for="email" class="block text-gray-700 font-medium mb-2">邮箱</label>
+                                <input type="email" id="email" class="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent" placeholder="请输入您的邮箱" required>
+                            </div>
+                            <div class="mb-6">
+                                <label for="phone" class="block text-gray-700 font-medium mb-2">电话</label>
+                                <input type="tel" id="phone" class="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent" placeholder="请输入您的电话" required>
+                            </div>
+                            <div class="mb-6">
+                                <label for="interest" class="block text-gray-700 font-medium mb-2">感兴趣的产品/服务</label>
+                                <select id="interest" class="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent">
+                                    <option value="">请选择</option>
+                                    <option value="智能解决方案">智能解决方案</option>
+                                    <option value="工业自动化设备">工业自动化设备</option>
+                                    <option value="智能控制系统">智能控制系统</option>
+                                    <option value="数字化转型咨询">数字化转型咨询</option>
+                                    <option value="技术支持与培训">技术支持与培训</option>
+                                    <option value="系统集成服务">系统集成服务</option>
+                                </select>
+                            </div>
+                            <button type="submit" class="w-full bg-primary text-white py-3 rounded-md font-medium hover:bg-secondary transition-all-300">提交</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 页脚 -->
+    <footer class="bg-secondary text-white py-6">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <p class="mb-4 md:mb-0 opacity-80">© 2023 科技企业. 保留所有权利.</p>
+                <div class="flex space-x-6">
+                    <a href="#" class="opacity-80 hover:opacity-100 transition-all-300">隐私政策</a>
+                    <a href="#" class="opacity-80 hover:opacity-100 transition-all-300">使用条款</a>
+                    <a href="#" class="opacity-80 hover:opacity-100 transition-all-300">网站地图</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- 产品详情模态框 -->
+    <div id="product-modal" class="modal fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4">
+        <div class="modal-content bg-white rounded-lg max-w-4xl w-full max-h-[90vh] overflow-y-auto">
+            <div class="relative">
+                <button id="close-modal" class="absolute top-4 right-4 text-gray-500 hover:text-gray-700 focus:outline-none z-10">
+                    <i class="fa fa-times text-2xl"></i>
+                </button>
+                
+                <div id="product-details" class="p-6 md:p-8">
+                    <!-- 产品详情内容将通过JavaScript动态加载 -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 回到顶部按钮 -->
+    <button id="back-to-top" class="back-to-top fixed bottom-8 right-8 bg-primary text-white w-12 h-12 rounded-full flex items-center justify-center shadow-lg z-50 hover:bg-secondary transition-all-300">
+        <i class="fa fa-arrow-up"></i>
+    </button>
+
+    <!-- JavaScript -->
+    <script>
+        // 初始化AOS动画库
+        document.addEventListener('DOMContentLoaded', function() {
+            AOS.init({
+                duration: 800,
+                once: true
+            });
+            
+            // 导航栏滚动效果
+            const navbar = document.getElementById('navbar');
+            window.addEventListener('scroll', function() {
+                if (window.scrollY > 50) {
+                    navbar.classList.add('navbar-fixed');
+                } else {
+                    navbar.classList.remove('navbar-fixed');
+                }
+            });
+            
+            // 移动端菜单
+            const menuToggle = document.getElementById('menu-toggle');
+            const closeMenu = document.getElementById('close-menu');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const menuOverlay = document.getElementById('menu-overlay');
+            
+            menuToggle.addEventListener('click', function() {
+                mobileMenu.classList.add('active');
+                menuOverlay.classList.remove('hidden');
+                document.body.style.overflow = 'hidden';
+            });
+            
+            function closeMenuHandler() {
+                mobileMenu.classList.remove('active');
+                menuOverlay.classList.add('hidden');
+                document.body.style.overflow = '';
+            }
+            
+            closeMenu.addEventListener('click', closeMenuHandler);
+            menuOverlay.addEventListener('click', closeMenuHandler);
+            
+            // 移动端下拉菜单
+            const mobileDropdowns = document.querySelectorAll('.mobile-dropdown');
+            mobileDropdowns.forEach(dropdown => {
+                const button = dropdown.querySelector('button');
+                const content = dropdown.querySelector('.mobile-dropdown-content');
+                
+                button.addEventListener('click', function() {
+                    content.classList.toggle('hidden');
+                });
+            });
+            
+            // 产品筛选
+            const filterBtns = document.querySelectorAll('.product-filter-btn');
+            const productCards = document.querySelectorAll('.product-card');
+            
+            filterBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    // 移除所有按钮的active状态
+                    filterBtns.forEach(b => {
+                        b.classList.remove('active', 'bg-primary', 'text-white');
+                        b.classList.add('bg-gray-200', 'text-gray-700');
+                    });
+                    
+                    // 添加当前按钮的active状态
+                    this.classList.add('active', 'bg-primary', 'text-white');
+                    this.classList.remove('bg-gray-200', 'text-gray-700');
+                    
+                    const filter = this.getAttribute('data-filter');
+                    
+                    // 筛选产品
+                    productCards.forEach(card => {
+                        if (filter === 'all' || card.getAttribute('data-category').includes(filter)) {
+                            card.style.display = 'block';
+                            setTimeout(() => {
+                                card.style.opacity = '1';
+                                card.style.transform = 'scale(1)';
+                            }, 100);
+                        } else {
+                            card.style.opacity = '0';
+                            card.style.transform = 'scale(0.8)';
+                            setTimeout(() => {
+                                card.style.display = 'none';
+                            }, 300);
+                        }
+                    });
+                });
+            });
+            
+            // 产品详情模态框
+            const productModal = document.getElementById('product-modal');
+            const closeModal = document.getElementById('close-modal');
+            const productDetails = document.getElementById('product-details');
+            const viewDetailsBtns = document.querySelectorAll('.view-details');
+            
+            // 产品数据
+            const productsData = [
+                {
+                    id: 1,
+                    name: "智能解决方案",
+                    category: "产品",
+                    tags: ["热门", "解决方案"],
+                    images: [
+                        "https://p26-doubao-search-sign.byteimg.com/tos-cn-i-tjoges91tu/3b4fe1893ae67047516e8e4d06d0e575~tplv-be4g95zd3a-image.jpeg?rk3s=542c0f93&x-expires=1765176968&x-signature=YPlo%2FHCUeVP5UNbeNlGA6gf91E0%3D",
+                        "https://p26-doubao-search-sign.byteimg.com/tos-cn-i-tjoges91tu/f09e485aaf4b158e4999c2cca4e2514b~tplv-be4g95zd3a-image.jpeg?rk3s=542c0f93&x-expires=1765176968&x-signature=pG7xVJOcTQUBmeHxlg1N912irHc%3D",
+                        "https://p11-doubao-search-sign.byteimg.com/labis/4fa7ad17b95ee7b0b7935f6185df37e8~tplv-be4g95zd3a-image.jpeg?rk3s=542c0f93&x-expires=1765176968&x-signature=oBshADvQJmL56aiAL3Qm9pT45rY%3D"
+                    ],
+                    description: "智能解决方案是我们为企业提供的全方位智能化转型服务，包括硬件设备、软件系统和专业咨询服务。该方案通过整合先进的物联网、大数据、人工智能等技术，帮助企业实现生产、运营和管理的智能化升级，提高效率，降低成本，增强竞争力。",
+                    features: [
+                        "物联网数据采集与分析",
+                        "人工智能算法优化",
+                        "大数据处理与可视化",
+                        "智能决策支持系统",
+                        "全流程自动化控制"
+                    ],
+                    specifications: [
+                        { name: "系统架构", value: "分布式云架构" },
+                        { name: "响应时间", value: "毫秒级" },
+                        { name: "数据处理能力", value: "TB级/天" },
+                        { name: "并发用户", value: "支持1000+并发" },
+                        { name: "安全等级", value: "ISO27001认证" }
+                    ],
+                    applications: ["制造业", "零售业", "医疗行业", "能源行业", "物流行业"],
+                    advantages: "智能解决方案的核心优势在于其全面性和定制化能力。我们的专业团队会根据企业的具体需求和业务特点，提供量身定制的解决方案，确保系统能够无缝集成到企业现有的业务流程中，最大限度地发挥智能化技术的价值。"
+                },
+                {
+                    id: 2,
+                    name: "工业自动化设备",
+                    category: "产品",
+                    tags: [],
+                    images: [
+                        "https://p11-doubao-search-sign.byteimg.com/labis/75fdf4263f903549f33e38a7f57cb6ab~tplv-be4g95zd3a-image.jpeg?rk3s=542c0f93&x-expires=1765176968&x-signature=4m%2BoLr1Y0bVDs2TM2mvJpw6ZIfQ%3D",
+                        "https://p11-doubao-search-sign.byteimg.com/labis/47c734ca61f490ccb5d43ee1f117e211~tplv-be4g95zd3a-image.jpeg?rk3s=542c0f93&x-expires=1765176968&x-signature=ldIRs6vloEgx7j6sDtb2USw2SHk%3D"
+                    ],
+                    description: "我们的工业自动化设备采用先进的控制技术和精密的机械设计，能够满足各种工业生产场景的自动化需求。从简单的自动化控制到复杂的生产线自动化，我们都能提供高品质、高可靠性的设备解决方案。",
+                    features: [
+                        "高精度传感器与执行器",
+                        "先进的运动控制系统",
+                        "模块化设计，易于扩展",
+                        "工业级防护，适应恶劣环境",
+                        "支持远程监控与维护"
+                    ],
+                    specifications: [
+                        { name: "控制精度", value: "±0.001mm" },
+                        { name: "工作温度", value: "-20℃ ~ 60℃" },
+                        { name: "防护等级", value: "IP67" },
+                        { name: "通信接口", value: "Ethernet, RS485, CAN" },
+                        { name: "电源要求", value: "220V AC ±10%, 50Hz" }
+                    ],
+                    applications: ["汽车制造", "电子设备生产", "医疗器械制造", "食品加工", "重工业"],
+                    advantages: "我们的工业自动化设备具有高精度、高可靠性和高灵活性的特点，能够适应各种复杂的工业环境。设备采用模块化设计，易于安装、调试和维护，同时支持与各种工业控制系统的无缝集成，为企业提供全面的自动化解决方案。"
+                },
+                {
+                    id: 3,
+                    name: "数字化转型咨询",
+                    category: "服务",
+                    tags: ["新品"],
+                    images: [
+                        "https://p3-doubao-search-sign.byteimg.com/labis/799544f1e44be277bd617343bad63b18~tplv-be4g95zd3a-image.jpeg?rk3s=542c0f93&x-expires=1765176968&x-signature=CLORhHvcReHdWeC7bcwkCeSxO7g%3D",
+                        "https://p26-doubao-search-sign.byteimg.com/labis/image/ab315c03f6693492e2e72d799c546360~tplv-be4g95zd3a-image.jpeg?rk3s=542c0f93&x-expires=1765176963&x-signature=r4KSsDHZg8rid%2FKtYcoqg1qEe2c%3D"
+                    ],
+                    description: "数字化转型咨询服务是我们为企业提供的专业咨询服务，旨在帮助企业制定和实施数字化转型战略。我们的咨询团队由经验丰富的行业专家和技术顾问组成，能够为企业提供全方位的数字化转型支持，包括战略规划、技术选型、实施路线图制定等。",
+                    features: [
+                        "数字化成熟度评估",
+                        "业务流程数字化重构",
+                        "技术架构规划与设计",
+                        "实施路线图制定",
+                        "数字化转型培训与赋能"
+                    ],
+                    process: [
+                        "需求分析与现状评估",
+                        "数字化战略规划",
+                        "技术架构设计",
+                        "实施路线图制定",
+                        "项目实施与监控",
+                        "效果评估与持续优化"
+                    ],
+                    deliverables: [
+                        "数字化成熟度评估报告",
+                        "数字化转型战略规划书",
+                        "技术架构设计方案",
+                        "实施路线图",
+                        "数字化转型培训材料"
+                    ],
+                    advantages: "我们的数字化转型咨询服务具有行业针对性强、方法论成熟、落地能力强的特点。我们不仅提供战略层面的指导，还能为企业提供具体的实施建议和技术支持，确保数字化转型战略能够顺利落地并取得实效。"
+                },
+                {
+                    id: 4,
+                    name: "技术支持与培训",
+                    category: "服务",
+                    tags: [],
+                    images: [
+                        "https://p3-doubao-search-sign.byteimg.com/labis/194a159df557901fe1ec0f2570ee7d3b~tplv-be4g95zd3a-image.jpeg?rk3s=542c0f93&x-expires=1765176968&x-signature=vo54H2NVwNei3SfaCEAz0L4YG%2BQ%3D"
+                    ],
+                    description: "我们提供全面的技术支持和培训服务，确保客户能够充分利用我们的产品和解决方案。无论是产品安装调试、故障排除，还是操作培训、技术咨询，我们的专业团队都能为客户提供及时、专业的支持。",
+                    features: [
+                        "7x24小时技术支持热线",
+                        "远程诊断与故障排除",
+                        "现场技术支持",
+                        "定制化培训课程",
+                        "技术文档与知识库"
+                    ],
+                    supportTypes: [
+                        "电话支持",
+                        "邮件支持",
+                        "远程支持",
+                        "现场支持",
+                        "定期维护"
+                    ],
+                    trainingCourses: [
+                        "产品基础操作培训",
+                        "高级功能应用培训",
+                        "系统管理员培训",
+                        "开发人员培训",
+                        "定制化培训课程"
+                    ],
+                    advantages: "我们的技术支持团队由经验丰富的工程师组成，能够快速响应客户需求，提供专业的技术支持。同时，我们的培训课程由行业专家设计，内容全面、实用，能够帮助客户快速掌握产品的使用和维护技能。"
+                },
+                {
+                    id: 5,
+                    name: "智能控制系统",
+                    category: "产品",
+                    tags: [],
+                    images: [
+                        "https://p11-doubao-search-sign.byteimg.com/labis/4fa7ad17b95ee7b0b7935f6185df37e8~tplv-be4g95zd3a-image.jpeg?rk3s=542c0f93&x-expires=1765176968&x-signature=oBshADvQJmL56aiAL3Qm9pT45rY%3D",
+                        "https://p26-doubao-search-sign.byteimg.com/tos-cn-i-tjoges91tu/f09e485aaf4b158e4999c2cca4e2514b~tplv-be4g95zd3a-image.jpeg?rk3s=542c0f93&x-expires=1765176968&x-signature=pG7xVJOcTQUBmeHxlg1N912irHc%3D"
+                    ],
+                    description: "智能控制系统是我们自主研发的先进控制系统，采用先进的控制算法和人工智能技术，能够实现对各种工业和商业场景的智能控制和优化。该系统具有高度的灵活性和可扩展性，能够适应不同规模和复杂度的控制需求。",
+                    features: [
+                        "先进的控制算法",
+                        "人工智能优化",
+                        "实时数据处理",
+                        "可视化监控界面",
+                        "支持多种通信协议"
+                    ],
+                    specifications: [
+                        { name: "控制精度", value: "±0.01%" },
+                        { name: "采样频率", value: "最高1000Hz" },
+                        { name: "控制回路数", value: "最大1000个" },
+                        { name: "通信接口", value: "Ethernet, Modbus, OPC UA" },
+                        { name: "操作系统", value: "Linux/Windows" }
+                    ],
+                    applications: ["工业生产", "能源管理", "智能建筑", "交通运输", "环境监控"],
+                    advantages: "智能控制系统的核心优势在于其先进的控制算法和人工智能优化能力。系统能够根据实时数据和历史数据，自动调整控制参数，实现最优控制效果。同时，系统具有良好的用户界面和操作体验，使操作人员能够轻松掌握和使用。"
+                },
+                {
+                    id: 6,
+                    name: "系统集成服务",
+                    category: "服务",
+                    tags: [],
+                    images: [
+                        "https://p26-doubao-search-sign.byteimg.com/labis/image/ab315c03f6693492e2e72d799c546360~tplv-be4g95zd3a-image.jpeg?rk3s=542c0f93&x-expires=1765176963&x-signature=r4KSsDHZg8rid%2FKtYcoqg1qEe2c%3D"
+                    ],
+                    description: "系统集成服务是我们为企业提供的专业服务，旨在将各种独立的系统整合为一个统一的整体，提高系统效率和可靠性。我们的系统集成团队具有丰富的经验和专业知识，能够为企业提供全方位的系统集成解决方案。",
+                    features: [
+                        "系统需求分析与规划",
+                        "接口设计与开发",
+                        "系统集成与测试",
+                        "数据迁移与整合",
+                        "系统优化与性能调优"
+                    ],
+                    integrationProcess: [
+                        "需求分析与规划",
+                        "系统架构设计",
+                        "接口设计与开发",
+                        "系统集成与测试",
+                        "数据迁移与整合",
+                        "系统上线与运维"
+                    ],
+                    technologies: [
+                        "企业服务总线(ESB)",
+                        "API网关",
+                        "数据集成平台",
+                        "中间件技术",
+                        "云计算技术"
+                    ],
+                    advantages: "我们的系统集成服务具有技术先进、经验丰富、质量可靠的特点。我们能够根据企业的具体需求，提供量身定制的系统集成解决方案，确保系统能够无缝集成，提高企业的运营效率和管理水平。"
+                }
+            ];
+            
+            // 打开产品详情模态框
+            viewDetailsBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const productId = parseInt(this.getAttribute('data-id'));
+                    const product = productsData.find(p => p.id === productId);
+                    
+                    if (product) {
+                        // 加载产品详情内容
+                        let content = `
+                            <div class="mb-8">
+                                <h2 class="text-3xl font-bold mb-4 text-secondary">${product.name}</h2>
+                                <div class="flex flex-wrap gap-2 mb-6">
+                                    ${product.tags.map(tag => `<span class="bg-primary text-white text-xs font-bold px-3 py-1 rounded-full">${tag}</span>`).join('')}
+                                </div>
+                            </div>
+                            
+                            <div class="mb-10">
+                                <div class="product-gallery">
+                                    <div class="main-image h-80 md:h-96 overflow-hidden rounded-lg">
+                                        <img src="${product.images[0]}" alt="${product.name}" class="w-full h-full object-cover" id="main-product-image">
+                                    </div>
+                                    <div class="gallery-thumbs mt-4">
+                                        ${product.images.map((img, index) => `
+                                            <div class="gallery-thumb ${index === 0 ? 'active' : ''}" data-index="${index}">
+                                                <img src="${img}" alt="${product.name}" class="w-full h-full object-cover rounded">
+                                            </div>
+                                        `).join('')}
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="mb-10">
+                                <h3 class="text-2xl font-bold mb-4 text-secondary">产品描述</h3>
+                                <p class="text-gray-700 leading-relaxed">${product.description}</p>
+                            </div>
+                        `;
+                        
+                        // 根据产品类型添加不同的内容
+                        if (product.category === '产品') {
+                            content += `
+                                <div class="mb-10">
+                                    <h3 class="text-2xl font-bold mb-4 text-secondary">产品特点</h3>
+                                    <ul class="space-y-3">
+                                        ${product.features.map(feature => `
+                                            <li class="feature-item flex items-start">
+                                                <i class="fa fa-check-circle text-primary mt-1 mr-3"></i>
+                                                <span>${feature}</span>
+                                            </li>
+                                        `).join('')}
+                                    </ul>
+                                </div>
+                                
+                                <div class="mb-10">
+                                    <h3 class="text-2xl font-bold mb-4 text-secondary">技术参数</h3>
+                                    <div class="overflow-x-auto">
+                                        <table class="param-table w-full">
+                                            <tbody>
+                                                ${product.specifications.map(spec => `
+                                                    <tr>
+                                                        <th class="text-left">${spec.name}</th>
+                                                        <td>${spec.value}</td>
+                                                    </tr>
+                                                `).join('')}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                
+                                <div class="mb-10">
+                                    <h3 class="text-2xl font-bold mb-4 text-secondary">应用领域</h3>
+                                    <div class="flex flex-wrap gap-3">
+                                        ${product.applications.map(app => `
+                                            <span class="bg-light text-secondary px-4 py-2 rounded-full">${app}</span>
+                                        `).join('')}
+                                    </div>
+                                </div>
+                            `;
+                        } else if (product.category === '服务') {
+                            if (product.id === 3) { // 数字化转型咨询
+                                content += `
+                                    <div class="mb-10">
+                                        <h3 class="text-2xl font-bold mb-4 text-secondary">服务内容</h3>
+                                        <ul class="space-y-3">
+                                            ${product.features.map(feature => `
+                                                <li class="feature-item flex items-start">
+                                                    <i class="fa fa-check-circle text-primary mt-1 mr-3"></i>
+                                                    <span>${feature}</span>
+                                                </li>
+                                            `).join('')}
+                                        </ul>
+                                    </div>
+                                    
+                                    <div class="mb-10">
+                                        <h3 class="text-2xl font-bold mb-4 text-secondary">服务流程</h3>
+                                        <div class="relative">
+                                            <div class="absolute left-4 top-0 bottom-0 w-0.5 bg-gray-200"></div>
+                                            <ul class="space-y-6 relative">
+                                                ${product.process.map((step, index) => `
+                                                    <li class="flex">
+                                                        <div class="flex-shrink-0 w-8 h-8 bg-primary rounded-full flex items-center justify-center text-white font-bold">${index + 1}</div>
+                                                        <div class="ml-4">
+                                                            <p class="font-medium">${step}</p>
+                                                        </div>
+                                                    </li>
+                                                `).join('')}
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="mb-10">
+                                        <h3 class="text-2xl font-bold mb-4 text-secondary">交付成果</h3>
+                                        <ul class="space-y-2">
+                                            ${product.deliverables.map(deliverable => `
+                                                <li class="flex items-center">
+                                                    <i class="fa fa-file-text-o text-primary mr-2"></i>
+                                                    <span>${deliverable}</span>
+                                                </li>
+                                            `).join('')}
+                                        </ul>
+                                    </div>
+                                `;
+                            } else if (product.id === 4) { // 技术支持与培训
+                                content += `
+                                    <div class="mb-10">
+                                        <h3 class="text-2xl font-bold mb-4 text-secondary">服务内容</h3>
+                                        <ul class="space-y-3">
+                                            ${product.features.map(feature => `
+                                                <li class="feature-item flex items-start">
+                                                    <i class="fa fa-check-circle text-primary mt-1 mr-3"></i>
+                                                    <span>${feature}</span>
+                                                </li>
+                                            `).join('')}
+                                        </ul>
+                                    </div>
+                                    
+                                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-10">
+                                        <div>
+                                            <h3 class="text-xl font-bold mb-4 text-secondary">支持类型</h3>
+                                            <ul class="space-y-2">
+                                                ${product.supportTypes.map(type => `
+                                                    <li class="flex items-center">
+                                                        <i class="fa fa-check text-primary mr-2"></i>
+                                                        <span>${type}</span>
+                                                    </li>
+                                                `).join('')}
+                                            </ul>
+                                        </div>
+                                        <div>
+                                            <h3 class="text-xl font-bold mb-4 text-secondary">培训课程</h3>
+                                            <ul class="space-y-2">
+                                                ${product.trainingCourses.map(course => `
+                                                    <li class="flex items-center">
+                                                        <i class="fa fa-graduation-cap text-primary mr-2"></i>
+                                                        <span>${course}</span>
+                                                    </li>
+                                                `).join('')}
+                                            </ul>
+                                        </div>
+                                    </div>
+                                `;
+                            } else if (product.id === 6) { // 系统集成服务
+                                content += `
+                                    <div class="mb-10">
+                                        <h3 class="text-2xl font-bold mb-4 text-secondary">服务内容</h3>
+                                        <ul class="space-y-3">
+                                            ${product.features.map(feature => `
+                                                <li class="feature-item flex items-start">
+                                                    <i class="fa fa-check-circle text-primary mt-1 mr-3"></i>
+                                                    <span>${feature}</span>
+                                                </li>
+                                            `).join('')}
+                                        </ul>
+                                    </div>
+                                    
+                                    <div class="mb-10">
+                                        <h3 class="text-2xl font-bold mb-4 text-secondary">集成流程</h3>
+                                        <div class="relative">
+                                            <div class="absolute left-4 top-0 bottom-0 w-0.5 bg-gray-200"></div>
+                                            <ul class="space-y-6 relative">
+                                                ${product.integrationProcess.map((step, index) => `
+                                                    <li class="flex">
+                                                        <div class="flex-shrink-0 w-8 h-8 bg-primary rounded-full flex items-center justify-center text-white font-bold">${index + 1}</div>
+                                                        <div class="ml-4">
+                                                            <p class="font-medium">${step}</p>
+                                                        </div>
+                                                    </li>
+                                                `).join('')}
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="mb-10">
+                                        <h3 class="text-2xl font-bold mb-4 text-secondary">技术栈</h3>
+                                        <div class="flex flex-wrap gap-3">
+                                            ${product.technologies.map(tech => `
+                                                <span class="bg-light text-secondary px-4 py-2 rounded-full">${tech}</span>
+                                            `).join('')}
+                                        </div>
+                                    </div>
+                                `;
+                            }
+                        }
+                        
+                        // 添加产品优势
+                        content += `
+                            <div class="mb-10">
+                                <h3 class="text-2xl font-bold mb-4 text-secondary">产品优势</h3>
+                                <div class="bg-light p-6 rounded-lg">
+                                    <p class="text-gray-700">${product.advantages}</p>
+                                </div>
+                            </div>
+                            
+                            <div class="text-center">
+                                <a href="contact.html" class="inline-block bg-primary text-white px-8 py-3 rounded-md font-medium hover:bg-secondary transition-all-300">联系我们了解更多</a>
+                            </div>
+                        `;
+                        
+                        productDetails.innerHTML = content;
+                        productModal.classList.add('active');
+                        document.body.style.overflow = 'hidden';
+                        
+                        // 产品图片预览功能
+                        const galleryThumbs = document.querySelectorAll('.gallery-thumb');
+                        const mainProductImage = document.getElementById('main-product-image');
+                        
+                        galleryThumbs.forEach(thumb => {
+                            thumb.addEventListener('click', function() {
+                                const index = parseInt(this.getAttribute('data-index'));
+                                mainProductImage.src = product.images[index];
+                                
+                                // 更新active状态
+                                galleryThumbs.forEach(t => t.classList.remove('active'));
+                                this.classList.add('active');
+                            });
+                        });
+                    }
+                });
+            });
+            
+            // 关闭产品详情模态框
+            closeModal.addEventListener('click', function() {
+                productModal.classList.remove('active');
+                document.body.style.overflow = '';
+            });
+            
+            // 点击模态框外部关闭
+            productModal.addEventListener('click', function(e) {
+                if (e.target === productModal) {
+                    productModal.classList.remove('active');
+                    document.body.style.overflow = '';
+                }
+            });
+            
+            // 回到顶部按钮
+            const backToTopBtn = document.getElementById('back-to-top');
+            
+            window.addEventListener('scroll', function() {
+                if (window.scrollY > 300) {
+                    backToTopBtn.classList.add('active');
+                } else {
+                    backToTopBtn.classList.remove('active');
+                }
+            });
+            
+            backToTopBtn.addEventListener('click', function() {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+            
+            // 联系表单提交
+            const contactForm = document.querySelector('form');
+            contactForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // 表单验证
+                const name = document.getElementById('name').value;
+                const email = document.getElementById('email').value;
+                const phone = document.getElementById('phone').value;
+                
+                if (!name || !email || !phone) {
+                    alert('请填写所有必填字段');
+                    return;
+                }
+                
+                // 模拟表单提交
+                alert('感谢您的咨询，我们会尽快与您联系！');
+                contactForm.reset();
+            });
+            
+            // 图片懒加载
+            const lazyImages = document.querySelectorAll('img');
+            
+            if ('IntersectionObserver' in window) {
+                const imageObserver = new IntersectionObserver((entries, observer) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            const img = entry.target;
+                            img.src = img.src;
+                            imageObserver.unobserve(img);
+                        }
+                    });
+                });
+                
+                lazyImages.forEach(img => {
+                    imageObserver.observe(img);
+                });
+            }
+        });
+    </script>
+</body>
+</html>
