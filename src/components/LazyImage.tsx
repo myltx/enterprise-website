@@ -10,7 +10,6 @@ interface LazyImageProps {
   width?: number;
   height?: number;
   priority?: boolean;
-  placeholder?: string;
 }
 
 const LazyImage: React.FC<LazyImageProps> = ({
@@ -20,7 +19,6 @@ const LazyImage: React.FC<LazyImageProps> = ({
   width,
   height,
   priority = false,
-  placeholder = "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZjBmMGYwIi8+PC9zdmc+",
 }) => {
   const [isLoaded, setIsLoaded] = useState(false);
   const [isInView, setIsInView] = useState(priority);
@@ -71,7 +69,6 @@ const LazyImage: React.FC<LazyImageProps> = ({
               isLoaded ? "opacity-100" : "opacity-0"
             }`}
             onLoad={() => setIsLoaded(true)}
-            placeholder={placeholder}
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
           />
         </>

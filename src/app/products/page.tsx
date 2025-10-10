@@ -307,7 +307,7 @@ const ProductsPage: React.FC = () => {
                 </div>
               </div>
               <p className="text-gray-600 italic mb-4">
-                "使用了这款产品后，我们公司的工作效率显著提升，团队协作更加顺畅，项目进度也得到了更好的控制。这是一款真正能够解决实际问题的好产品！"
+                &ldquo;使用了这款产品后,我们公司的工作效率显著提升,团队协作更加顺畅,项目进度也得到了更好的控制。这是一款真正能够解决实际问题的好产品!&rdquo;
               </p>
               <div className="flex text-yellow-400">
                 <i className="fas fa-star"></i>
@@ -330,7 +330,7 @@ const ProductsPage: React.FC = () => {
                 </div>
               </div>
               <p className="text-gray-600 italic mb-4">
-                "这款产品的技术实力和服务质量都非常出色，我们的系统运行稳定，数据安全得到了很好的保障。团队的专业水平和响应速度也给我们留下了深刻的印象。"
+                &ldquo;这款产品的技术实力和服务质量都非常出色,我们的系统运行稳定,数据安全得到了很好的保障。团队的专业水平和响应速度也给我们留下了深刻的印象。&rdquo;
               </p>
               <div className="flex text-yellow-400">
                 <i className="fas fa-star"></i>
@@ -353,7 +353,7 @@ const ProductsPage: React.FC = () => {
                 </div>
               </div>
               <p className="text-gray-600 italic mb-4">
-                "通过实施这个解决方案，我们的生产效率提升了30%，成本降低了20%，取得了显著的经济效益。这是我们近年来最成功的一次技术升级项目。"
+                &ldquo;通过实施这个解决方案,我们的生产效率提升了30%,成本降低了20%,取得了显著的经济效益。这是我们近年来最成功的一次技术升级项目。&rdquo;
               </p>
               <div className="flex text-yellow-400">
                 <i className="fas fa-star"></i>

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import "aos/dist/aos.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import BackToTop from "@/components/BackToTop";
@@ -16,7 +17,7 @@ export const metadata: Metadata = {
   description:
     "我们致力于为客户提供高质量的产品和服务，帮助企业实现数字化转型，提升核心竞争力。",
   keywords: "科技,企业,产品,服务,数字化转型",
-  author: "科技企业",
+  authors: [{ name: "科技企业" }],
 };
 
 export default function RootLayout({

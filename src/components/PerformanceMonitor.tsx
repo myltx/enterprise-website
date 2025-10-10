@@ -2,6 +2,24 @@
 
 import { useEffect } from "react";
 
+// 定义 Layout Shift Entry 类型
+interface LayoutShiftEntry extends PerformanceEntry {
+  value: number;
+  hadRecentInput: boolean;
+}
+
+// 定义 Performance Memory 类型
+interface PerformanceMemory {
+  usedJSHeapSize: number;
+  totalJSHeapSize: number;
+  jsHeapSizeLimit: number;
+}
+
+// 扩展 Performance 接口
+interface ExtendedPerformance extends Performance {
+  memory?: PerformanceMemory;
+}
+
 const PerformanceMonitor: React.FC = () => {
   useEffect(() => {
     // 监控页面加载性能
@@ -44,11 +62,11 @@ const PerformanceMonitor: React.FC = () => {
           }
 
           // 监控CLS (Cumulative Layout Shift)
-          if (
-            entry.entryType === "layout-shift" &&
-            !(entry as any).hadRecentInput
-          ) {
-            console.log("累积布局偏移:", (entry as any).value);
+          if (entry.entryType === "layout-shift") {
+            const layoutShiftEntry = entry as LayoutShiftEntry;
+            if (!layoutShiftEntry.hadRecentInput) {
+              console.log("累积布局偏移:", layoutShiftEntry.value);
+            }
           }
         });
       });
@@ -92,12 +110,15 @@ const PerformanceMonitor: React.FC = () => {
   // 监控内存使用情况
   useEffect(() => {
     if (typeof window !== "undefined" && "memory" in performance) {
-      const memory = (performance as any).memory;
-      console.log("内存使用情况:", {
-        used: Math.round(memory.usedJSHeapSize / 1048576) + "MB",
-        total: Math.round(memory.totalJSHeapSize / 1048576) + "MB",
-        limit: Math.round(memory.jsHeapSizeLimit / 1048576) + "MB",
-      });
+      const extendedPerformance = performance as ExtendedPerformance;
+      const memory = extendedPerformance.memory;
+      if (memory) {
+        console.log("内存使用情况:", {
+          used: Math.round(memory.usedJSHeapSize / 1048576) + "MB",
+          total: Math.round(memory.totalJSHeapSize / 1048576) + "MB",
+          limit: Math.round(memory.jsHeapSizeLimit / 1048576) + "MB",
+        });
+      }
     }
   }, []);
 

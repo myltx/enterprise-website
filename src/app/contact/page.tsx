@@ -1,14 +1,6 @@
 "use client"
 
 import React, { useState, useEffect } from 'react';
-// AOS懒加载
-import('aos').then(({ default: AOS }) => {
-  AOS.init({
-    once: true,
-    duration: 1000
-  });
-});
-import 'aos/dist/aos.css';
 
 const ContactPage: React.FC = () => {
   const [formData, setFormData] = useState({
@@ -19,6 +11,20 @@ const ContactPage: React.FC = () => {
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitSuccess, setSubmitSuccess] = useState(false);
+
+  // 初始化AOS动画
+  useEffect(() => {
+    const initializeAOS = async () => {
+      if (typeof window !== 'undefined') {
+        const AOS = (await import('aos')).default;
+        AOS.init({
+          once: true,
+          duration: 1000
+        });
+      }
+    };
+    initializeAOS();
+  }, []);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
