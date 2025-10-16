@@ -56,9 +56,7 @@ const CompanyIntroduction: React.FC = () => {
 
           {/* 联系信息 - 小字体 */}
           <div className="text-gray-500 text-xs space-y-1">
-            <p>
-              地址：浙江省杭州市西湖区蒋村街道西溪银泰商业中心3号楼南楼1009室
-            </p>
+            <p>地址：浙江省杭州市西湖区蒋村街道西溪银泰商业中心3号楼</p>
             <p>
               邮箱：
               <a
@@ -198,9 +196,7 @@ const CompanyIntroduction: React.FC = () => {
                   浙ICP备2025203798号-1
                 </a>
                 <div className="text-gray-500 text-xs space-y-1 mt-5">
-                  <p>
-                    地址：浙江省杭州市西湖区蒋村街道西溪银泰商业中心3号楼南楼1009室
-                  </p>
+                  <p>地址：浙江省杭州市西湖区蒋村街道西溪银泰商业中心3号楼</p>
                   <p>
                     邮箱：
                     <a
