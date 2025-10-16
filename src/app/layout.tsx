@@ -43,8 +43,8 @@ export default function RootLayout({
       <body className={`${inter.variable} antialiased`}>
         <PerformanceMonitor />
         {/* <Navbar /> */}
-        <main className="pt-16">{children}</main>
-        <Footer />
+        <main>{children}</main>
+        {/* <Footer /> */}
         <BackToTop />
       </body>
     </html>
