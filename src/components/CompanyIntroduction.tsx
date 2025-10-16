@@ -1,129 +1,111 @@
-"use client"
-
-import React from 'react';
-import { FaUsers, FaLightbulb, FaHeadset, FaBriefcase, FaArrowRight } from 'react-icons/fa';
+import React from "react";
 
 const CompanyIntroduction: React.FC = () => {
-  // 核心优势数据
-  const coreAdvantages = [
-    {
-      title: '专业团队',
-      description: '拥有一支经验丰富、技术精湛的专业团队，平均从业经验超过8年',
-      icon: <FaUsers />
-    },
-    {
-      title: '创新技术',
-      description: '持续投入研发，掌握前沿技术，为客户提供最具竞争力的解决方案',
-      icon: <FaLightbulb />
-    },
-    {
-      title: '优质服务',
-      description: '提供7×24小时全天候服务支持，确保客户业务顺利运行',
-      icon: <FaHeadset />
-    },
-    {
-      title: '行业经验',
-      description: '服务超过500家企业客户，覆盖金融、制造、医疗、教育等多个行业',
-      icon: <FaBriefcase />
-    }
-  ];
-
-  // 公司数据
-  const companyStats = [
-    { value: '500+', label: '企业客户' },
-    { value: '8年+', label: '行业经验' },
-    { value: '98%', label: '客户满意度' },
-    { value: '200+', label: '专业人才' }
-  ];
-
   return (
-    <section className="py-16 bg-white">
-      <div className="container mx-auto px-4">
-        {/* 标题和介绍 */}
-        <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-4xl font-bold mb-6 text-gray-800">关于我们</h2>
-          <p className="text-gray-600 max-w-3xl mx-auto text-lg">
-            我们是一家专注于数字化转型和企业解决方案的高新技术企业，致力于为客户提供全方位的技术支持和服务
-          </p>
+    <section className="bg-gradient-to-br from-gray-50 via-white to-blue-50 pb-16 flex ">
+      <div className="container mx-auto px-4 max-w-6xl">
+        {/* 主标题区 */}
+        <div className="text-center mb-12">
+          <div className="inline-block">
+            <h1 className="text-5xl md:text-7xl font-bold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-blue-800 flex items-center">
+              <img
+                className="w-16 h-16"
+                src="https://mp-d78a9abc-b098-4e6b-a411-81bf347d6358.cdn.bspapp.com/logo.png"
+                alt=""
+              />
+              天玑智算
+            </h1>
+            <div className="h-1.5 bg-gradient-to-r from-blue-600 to-blue-800 rounded-full"></div>
+          </div>
         </div>
 
-        {/* 公司简介和愿景使命 */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 mb-20">
-          <div className="bg-gray-50 p-8 rounded-xl shadow-sm">
-            <h3 className="text-2xl font-bold mb-6 text-gray-800">公司简介</h3>
-            <p className="text-gray-600 mb-4 leading-relaxed">
-              公司成立于2016年，总部位于上海，在北京、广州、深圳、成都等地设有分支机构。我们拥有一支由资深技术专家和行业顾问组成的团队，专注于为企业提供数字化转型咨询、解决方案设计与实施、技术支持与培训等全方位服务。
-            </p>
-            <p className="text-gray-600 mb-6 leading-relaxed">
-              凭借卓越的技术实力和丰富的行业经验，我们已成功为金融、制造、医疗、教育、零售等多个行业的500余家企业提供了优质的解决方案和服务，帮助客户提升了业务效率，降低了运营成本，增强了市场竞争力。
-            </p>
-            <a href="/about" className="inline-flex items-center text-primary font-medium hover:text-primary-dark transition-colors duration-300">
-              了解更多
-              <FaArrowRight className="ml-2" />
-            </a>
-          </div>
+        {/* 公司简介卡片 */}
+        <div className="mb-12">
+          <div className="bg-white p-8 md:p-12 rounded-3xl shadow-xl border border-gray-100 relative overflow-hidden">
+            {/* 装饰性背景元素 */}
+            <div className="absolute top-0 right-0 w-64 h-64 bg-gradient-to-br from-blue-100 to-transparent rounded-full -mr-32 -mt-32 opacity-40"></div>
+            <div className="absolute bottom-0 left-0 w-48 h-48 bg-gradient-to-tr from-blue-100 to-transparent rounded-full -ml-24 -mb-24 opacity-40"></div>
 
-          <div className="space-y-8">
-            <div className="bg-primary bg-opacity-5 p-8 rounded-xl border-l-4 border-primary">
-              <h3 className="text-2xl font-bold mb-4 text-primary">企业愿景</h3>
-              <p className="text-gray-700 leading-relaxed">
-                成为全球领先的企业数字化转型合作伙伴，通过创新技术推动商业变革，为客户创造可持续的价值。
-              </p>
-            </div>
-            
-            <div className="bg-primary bg-opacity-5 p-8 rounded-xl border-l-4 border-primary">
-              <h3 className="text-2xl font-bold mb-4 text-primary">企业使命</h3>
-              <p className="text-gray-700 leading-relaxed">
-                以客户为中心，以技术为驱动，提供卓越的产品和服务，帮助企业实现数字化转型，提升核心竞争力，创造更大的商业价值。
+            <div className="relative z-10">
+              <div className="flex items-center justify-center mb-6">
+                <div className="w-16 h-1 bg-gradient-to-r from-transparent via-blue-600 to-transparent"></div>
+                <h2 className="text-2xl md:text-3xl font-bold text-gray-800 mx-4">
+                  公司简介
+                </h2>
+                <div className="w-16 h-1 bg-gradient-to-r from-transparent via-blue-600 to-transparent"></div>
+              </div>
+
+              <p className="text-lg md:text-xl text-gray-700 leading-relaxed text-center">
+                ”天玑智算“是一家专注于提供高质量产品和服务的科技企业，致力于为客户创造价值，推动发展。深耕量化系统领域，以”天玑“喻精准、高效与智慧，为专业机构及投资者提供可靠量化解决方案，技术赋能市场决策与执行
               </p>
             </div>
           </div>
         </div>
 
-        {/* 核心优势 */}
-        <div className="mb-20">
-          <h3 className="text-2xl font-bold mb-10 text-center text-gray-800">核心优势</h3>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-            {coreAdvantages.map((advantage, index) => (
-              <div
-                key={index}
-                className="bg-white p-8 rounded-xl shadow-md hover:shadow-xl transition-all duration-300 border border-gray-100"
-              >
-                <div className="w-16 h-16 bg-primary bg-opacity-10 rounded-full flex items-center justify-center mb-6 text-primary text-2xl">
-                  {advantage.icon}
-                </div>
-                <h4 className="text-xl font-bold mb-3 text-gray-800">{advantage.title}</h4>
-                <p className="text-gray-600">{advantage.description}</p>
+        {/* 联系信息卡片 */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {/* 公司地址 */}
+          <div className="bg-white p-6 rounded-2xl shadow-lg border border-gray-100 hover:shadow-xl transition-shadow duration-300">
+            <div className="flex items-start">
+              <div className="flex-shrink-0 w-12 h-12 bg-gradient-to-br from-blue-500 to-blue-700 rounded-xl flex items-center justify-center mr-4">
+                <svg
+                  className="w-6 h-6 text-white"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24">
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
+                  />
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
+                  />
+                </svg>
               </div>
-            ))}
+              <div className="flex-1">
+                <h3 className="text-lg font-bold text-gray-800 mb-2">
+                  公司地址
+                </h3>
+                <p className="text-gray-600 leading-relaxed">
+                  浙江省杭州市西湖区蒋村街道西溪银泰商业中心3号楼南楼1009室
+                </p>
+              </div>
+            </div>
           </div>
-        </div>
 
-        {/* 公司数据 */}
-        <div className="bg-primary py-12 rounded-2xl text-white">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
-            {companyStats.map((stat, index) => (
-              <div key={index} className="p-4">
-                <div className="text-4xl md:text-5xl font-bold mb-2">{stat.value}</div>
-                <div className="text-primary-light">{stat.label}</div>
+          {/* 联系方式 */}
+          <div className="bg-white p-6 rounded-2xl shadow-lg border border-gray-100 hover:shadow-xl transition-shadow duration-300">
+            <div className="flex items-start">
+              <div className="flex-shrink-0 w-12 h-12 bg-gradient-to-br from-blue-500 to-blue-700 rounded-xl flex items-center justify-center mr-4">
+                <svg
+                  className="w-6 h-6 text-white"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24">
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+                  />
+                </svg>
               </div>
-            ))}
-          </div>
-        </div>
-
-        {/* 合作伙伴 */}
-        <div className="mt-20">
-          <h3 className="text-2xl font-bold mb-10 text-center text-gray-800">合作伙伴</h3>
-          <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-8 items-center justify-items-center">
-            {[1, 2, 3, 4, 5, 6].map((index) => (
-              <div key={index} className="opacity-70 hover:opacity-100 transition-opacity duration-300 grayscale hover:grayscale-0">
-                <img
-                  src={`https://picsum.photos/id/${30 + index}/200/80`}
-                  alt={`合作伙伴 ${index}`}
-                  className="h-12 object-contain"
-                />
+              <div className="flex-1">
+                <h3 className="text-lg font-bold text-gray-800 mb-2">
+                  联系方式
+                </h3>
+                <a
+                  href="mailto:tianji@tianjizhisuan.com"
+                  className="text-blue-600 hover:text-blue-800 transition-colors duration-300 font-medium break-all">
+                  tianji@tianjizhisuan.com
+                </a>
               </div>
-            ))}
+            </div>
           </div>
         </div>
       </div>

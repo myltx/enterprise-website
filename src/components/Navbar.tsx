@@ -30,14 +30,14 @@ const Navbar: React.FC = () => {
       label: "首页",
       href: "/",
     },
-    {
-      label: "关于我们",
-      href: "/about",
-    },
-    {
-      label: "产品服务",
-      href: "/products",
-    },
+    // {
+    //   label: "关于我们",
+    //   href: "/about",
+    // },
+    // {
+    //   label: "产品服务",
+    //   href: "/products",
+    // },
     {
       label: "客户案例",
       href: "/",
@@ -61,29 +61,29 @@ const Navbar: React.FC = () => {
         },
       ],
     },
-    {
-      label: "新闻中心",
-      href: "/",
-      hasDropdown: true,
-      dropdownItems: [
-        {
-          label: "公司新闻",
-          href: "/",
-        },
-        {
-          label: "行业动态",
-          href: "/",
-        },
-        {
-          label: "活动预告",
-          href: "/",
-        },
-      ],
-    },
-    {
-      label: "联系我们",
-      href: "/contact",
-    },
+    // {
+    //   label: "新闻中心",
+    //   href: "/",
+    //   hasDropdown: true,
+    //   dropdownItems: [
+    //     {
+    //       label: "公司新闻",
+    //       href: "/",
+    //     },
+    //     {
+    //       label: "行业动态",
+    //       href: "/",
+    //     },
+    //     {
+    //       label: "活动预告",
+    //       href: "/",
+    //     },
+    //   ],
+    // },
+    // {
+    //   label: "联系我们",
+    //   href: "/contact",
+    // },
   ];
 
   // 切换下拉菜单
@@ -125,11 +125,16 @@ const Navbar: React.FC = () => {
             <Link
               href="/"
               className="text-xl md:text-2xl font-bold text-blue-600 flex items-center touch-target">
-              <span className="w-8 h-8 rounded-md bg-blue-600 flex items-center justify-center mr-2 text-white">
+              {/* <span className="w-8 h-8 rounded-md bg-blue-600 flex items-center justify-center mr-2 text-white">
                 <FaBuilding size={18} />
-              </span>
-              <span className="hidden sm:inline">企业名称</span>
-              <span className="sm:hidden">企业</span>
+              </span> */}
+              {/* <img
+                className="w-8 h-8 rounded-md"
+                src="https://mp-d78a9abc-b098-4e6b-a411-81bf347d6358.cdn.bspapp.com/logo.png"
+                alt=""
+              />
+              <span className="hidden sm:inline">天玑智算</span>
+              <span className="sm:hidden">企业</span> */}
             </Link>
           </div>
 
@@ -186,22 +191,22 @@ const Navbar: React.FC = () => {
 
           {/* 右侧按钮组 */}
           <div className="hidden md:flex items-center gap-4">
-            <ThemeToggle />
+            {/* <ThemeToggle />
             <Link
               href="/contact"
               className="btn btn-primary px-6 py-2 font-semibold">
               立即联系
-            </Link>
+            </Link> */}
           </div>
 
           {/* 移动端菜单按钮 */}
-          <button
+          {/* <button
             className="md:hidden text-dark touch-target p-2"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             aria-label="菜单"
             aria-expanded={isMobileMenuOpen}>
             {isMobileMenuOpen ? <FaTimes size={24} /> : <FaBars size={24} />}
-          </button>
+          </button> */}
         </div>
 
         {/* 移动端菜单 */}

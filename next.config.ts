@@ -1,8 +1,10 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  // ✅ 启用静态导出
   output: "export",
-  basePath: "/enterprise-website",
+
+  // ✅ 静态导出时 next/image 需要禁用优化
   images: {
     unoptimized: true,
     remotePatterns: [
@@ -17,9 +19,14 @@ const nextConfig: NextConfig = {
     deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
     imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
   },
+
+  // ✅ 让每个路由都有 index.html（防止 IIS 不识别路由）
+  trailingSlash: true,
+
   experimental: {
     optimizeCss: true,
   },
+
   compiler: {
     removeConsole: process.env.NODE_ENV === "production",
   },

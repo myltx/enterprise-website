@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import "aos/dist/aos.css";
-import Navbar from "@/components/Navbar";
+// import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import BackToTop from "@/components/BackToTop";
 import PerformanceMonitor from "@/components/PerformanceMonitor";
@@ -42,7 +42,7 @@ export default function RootLayout({
       </head>
       <body className={`${inter.variable} antialiased`}>
         <PerformanceMonitor />
-        <Navbar />
+        {/* <Navbar /> */}
         <main className="pt-16">{children}</main>
         <Footer />
         <BackToTop />
